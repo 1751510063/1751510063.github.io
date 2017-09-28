@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        html,body{
+            width:100%;
+            height:100%;
+            overflow: hidden;
+        }
+        img{
+            width:100%;
+            height:100%;
+        }
+        .box{
+            width:1200px;
+            height:100%;
+            margin: 0 auto;
+            position:relative;
+            z-index: 120;
+        }
+        .big{
+            width: 100%;
+            height:100%;
+            position: fixed;
+            left: 0;
+            top:0;
+            background-color: #000;
+        }
+        .score,.live,.guan{
+            width: 120px;
+            height: 30px;
+            font-size: 18px;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            position: absolute;
+            left: 50px;
+            box-shadow: 0 0 10px red;
+            z-index: 300;
+        }
+        .score{
+            top:60px;
+        }
+        .score:before{
+            content: "分数";
+            display: inline;
+            padding: 10px;
+        }
+        .live:before{
+            content: "生命";
+            display: inline;
+            padding: 10px;
+
+        }
+        .guan:before{
+            content: "关卡";
+            display: inline;
+            padding: 10px;
+
+        }
+        .live{
+            top:120px;
+        }
+        .guan{
+            top:180px;
+        }
+        .huo{
+            width:100%;
+            height:260px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 300;
+            background-image:url("img/huo.jpg") ;
+            background-position: top;
+        }
+        .tupian{
+            width: 100%;
+            height:100%;
+            background-color: #000                                                                                                                        ;
+            position: fixed;
+            left: 0;
+            top:0;
+            z-index: 999;
+            transition: top 0.5s linear;
+        }
+        .tupian>img{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top:0;
+            bottom: 0;
+            margin:auto;
+        }
+    </style>
+</head>
+<body>
+<div class="score">0</div>
+<div class="live">10</div>
+<div class="guan">1</div>
+<div class="big">
+    <div class="bgm"></div>
+</div>
+    <div class="box">
+    </div>
+<div class="huo"></div>
+<div class="tupian">
+
+</div>
+</body>
+</html>
+<script>
+    var box=document.querySelector(".box");
+    var score=document.querySelector(".score");
+    var live=document.querySelector(".live");
+    var guan=document.querySelector(".guan");
+
+    function Dzyx () {
+        this.speedy=5;
+        this.arr=[];
+        this.brr=[];
+        this.t=null;
+        this.score=0;
+        this.live=10;
+        this.guan=1;
+        this.length=3;
+    }
+    Dzyx.prototype={
+        play:function () {
+           var that=this;
+           this.createbox();
+           this.t=setInterval(function () {
+              that.move();
+           },200);
+           this.clear();
+
+        },
+        createbox:function () {
+            for(var i=0;i<this.length;i++){
+                var div=document.createElement("div");
+                do{
+                    var ran=Math.ceil(Math.random()*25+65);
+                    var zm=String.fromCharCode(ran);
+                }while (this.check(zm));
+                div.id=zm;
+                this.arr.push(div);
+                this.arr[i].innerHTML="<img src=img/"+zm+".jpg>";
+                var posx=Math.random()*1000;
+                var posy=Math.random()*100;
+                this.arr[i].style.cssText='width:50px;height:50px;position:absolute;left:'+posx+"px;top:"+posy+"px";
+                box.appendChild(this.arr[i]);
+            };
+        },
+        check:function(letter){
+            return this.arr.some(function (dom) {
+                return dom.id==letter;
+            })
+        },
+        move:function () {
+            for(var i=0;i<this.arr.length;i++){
+                this.brr[i]=this.arr[i].offsetTop;
+                this.arr[i].style.top=this.brr[i]+this.speedy+"px";
+            }
+            var that=this;
+            for(var i=0;i<that.arr.length;i++ ) {
+               var height=that.arr[i].offsetTop;
+//               console.log(height);
+                if (height >= window.innerHeight-300) {
+                    that.live--;
+                    box.removeChild(that.arr[i]);
+                    that.arr.splice(i, 1);
+                    that.one();
+                    live.innerHTML = that.live;
+                    if (that.live <= 0) {
+                        alert("game over");
+                        clearInterval(that.t);
+                        document.onkeydown=null;
+                        return;
+                    }
+                }
+            };
+        },
+        one:function () {
+            var div=document.createElement("div");
+            do{
+                var ran=Math.ceil(Math.random()*25+65);
+                var zm=String.fromCharCode(ran);
+            }while (this.check(zm));
+            div.id=zm;
+            this.arr.push(div);
+            div.innerHTML="<img src=img/"+zm+".jpg>";
+            var posx=Math.random()*1000;
+            var posy=Math.random()*100;
+            div.style.cssText='width:50px;height:50px;position:absolute;left:'+posx+"px;top:"+posy+"px";
+            box.appendChild(div);
+        },
+        clear:function () {
+            var that=this;
+            document.onkeydown=function (e) {
+                var evn=e.key;
+                for(var i=0;i<that.arr.length;i++){
+                    if(evn.toUpperCase()==that.arr[i].id){
+                        that.score++;
+                        box.removeChild(that.arr[i]);
+                        that.arr.splice(i,1);
+                        that.one();
+                        score.innerHTML=that.score;
+                        if(that.score==12){
+                            var res=confirm('恭喜过关，是否进行下一关');
+                            if(res){
+                                that.next();
+                            }else{
+                                window.close();
+                            };
+                        };
+                    };
+                };
+            };
+
+        },
+        next:function () {
+            clearInterval(this.t);
+            for(var i=0;i<this.arr.length;i++){
+                box.removeChild(this.arr[i]);
+            };
+            this.speedy+=2;
+            this.live+=2;
+            this.score=0;
+            score.innerHTML=this.score;
+            live.innerHTML=this.live;
+            this.arr=[];
+            this.guan++;
+            guan.innerHTML=this.guan;
+            this.length++;
+            this.play();
+        }
+    };
+    let obj=new Dzyx();
+    var open=document.querySelector(".tupian");
+    console.log(open);
+    var i=6;
+    function daoshu() {
+         i--;
+        open.innerHTML=`<img src="img/${i}.jpg" alt="">`;
+        if(i==0){
+            clearInterval(tt);
+            open.style.top="100%";
+            obj.play();
+        }
+    }
+    var tt=setInterval(daoshu,1000)
+
+
+
+</script>

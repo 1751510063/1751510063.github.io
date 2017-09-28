@@ -2,7 +2,7 @@
 * @Author: lenovo
 * @Date:   2017-07-20 14:42:50
 * @Last Modified by:   lenovo
-* @Last Modified time: 2017-07-25 22:52:03
+* @Last Modified time: 2017-09-28 22:38:32
 */
 * {
   margin: 0;
@@ -285,7 +285,7 @@ a {
 	background-color: #fff;
 	position: relative;
 	overflow: hidden;
-	padding: 0 100px ;
+	padding: 0 5% ;
 	padding-top:5%;
 	z-index: 100;
 }
@@ -326,6 +326,10 @@ a {
 .chibar3{
 	width: 80%;
 	background-color: #9b59b6;
+}
+.chibar4{
+	width: 83%;
+	background-color: green;
 }
 .do{
 	width: 100%;
