@@ -2,7 +2,7 @@
 * @Author: lenovo
 * @Date:   2017-07-20 21:35:22
 * @Last Modified by:   lenovo
-* @Last Modified time: 2017-07-21 10:16:23
+* @Last Modified time: 2017-10-04 19:55:44
 */
 
 'use strict';
@@ -13,21 +13,24 @@ $(function(){
 
 	var top=$(".bgm").find(".page");
 	var tops=top.offset().top;
-	var cy=$(document.body).scrollTop();
+	var cy=$(document).scrollTop();
 	var flag=true;
 	var me=$("#me").offset().top-500;
 	var one=$(".one");
 	var cw=window.innerWidth;
 	window.onresize=function(){
-		console.log(window.innerWidth)
 		cw=window.innerWidth;
 			if(cw<996){
 				flag=false;
-				$(".banner").css("display","none")
+				$(".banner").css("display","none");
+			}else{
+				flag=true;
+				$(".banner").css("display","block");
 			}
 	}
 	window.onscroll=function(){
-		cy=$(document.body).scrollTop();
+		cy=$(document).scrollTop();
+		console.log(cy);
 		var scr=0;
 		one.each(function(index,value){
 			if(cy>=$(value).offset().top-350){

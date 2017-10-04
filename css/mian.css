@@ -2,7 +2,7 @@
 * @Author: lenovo
 * @Date:   2017-07-20 14:42:50
 * @Last Modified by:   lenovo
-* @Last Modified time: 2017-09-28 22:38:32
+* @Last Modified time: 2017-10-04 19:58:34
 */
 * {
   margin: 0;
@@ -305,7 +305,7 @@ a {
 }
 .parbar{
 	width: 95%;
-	height: 30px;
+	height: 10px;
 	border-radius: 8px;
 	background-color: #bdc3c7;
 }
@@ -330,6 +330,14 @@ a {
 .chibar4{
 	width: 83%;
 	background-color: green;
+}
+.chibar5{
+	width: 80%;
+	background-color: #d35400;
+}
+.chibar6{
+	width: 80%;
+	background-color: #3498db;
 }
 .do{
 	width: 100%;
