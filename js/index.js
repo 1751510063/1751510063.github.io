@@ -2,7 +2,7 @@
 * @Author: lenovo
 * @Date:   2017-07-20 21:35:22
 * @Last Modified by:   lenovo
-* @Last Modified time: 2017-10-04 19:55:44
+* @Last Modified time: 2017-10-08 20:49:15
 */
 
 'use strict';
@@ -30,7 +30,6 @@ $(function(){
 	}
 	window.onscroll=function(){
 		cy=$(document).scrollTop();
-		console.log(cy);
 		var scr=0;
 		one.each(function(index,value){
 			if(cy>=$(value).offset().top-350){
